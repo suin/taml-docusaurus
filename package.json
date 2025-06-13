@@ -1,6 +1,6 @@
 {
   "name": "@taml/docusaurus",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Docusaurus preset for rendering TAML (Terminal ANSI Markup Language) code blocks as styled components",
   "keywords": [
     "docusaurus",
