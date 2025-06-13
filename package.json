@@ -1,0 +1,70 @@
+{
+  "name": "@taml/docusaurus",
+  "version": "1.0.0-alpha.1",
+  "description": "Docusaurus preset for rendering TAML (Terminal ANSI Markup Language) code blocks as styled components",
+  "keywords": [
+    "docusaurus",
+    "preset",
+    "taml",
+    "terminal-ansi-markup-language",
+    "terminal",
+    "colors",
+    "styling",
+    "react"
+  ],
+  "homepage": "https://github.com/suin/taml-docusaurus#readme",
+  "bugs": {
+    "url": "https://github.com/suin/taml-docusaurus/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suin/taml-docusaurus.git"
+  },
+  "license": "MIT",
+  "author": "suin",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./js/plugin/index.d.ts",
+      "import": "./js/plugin/index.js",
+      "require": "./js/plugin/index.js"
+    },
+    "./component": {
+      "types": "./js/component/index.d.ts",
+      "import": "./js/component/index.js",
+      "require": "./js/component/index.js"
+    }
+  },
+  "main": "./js/plugin/index.js",
+  "module": "./js/plugin/index.js",
+  "types": "./js/plugin/index.d.ts",
+  "files": [
+    "js/**/*",
+    "ts/**/*",
+    "!ts/**/*.test.*",
+    "!ts/**/*.spec.*",
+    "!ts/**/__tests__"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf js *.tsbuildinfo",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@taml/react": "^1.0.0",
+    "unist-util-map": "^4.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/preset-classic": "^3.8.1",
+    "@docusaurus/types": "^3.8.1",
+    "@tsconfig/bun": "latest",
+    "@tsconfig/node22": "latest",
+    "@tsconfig/strictest": "latest",
+    "mdast": "^3.0.0",
+    "typescript": "latest",
+    "unified": "^11.0.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

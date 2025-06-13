@@ -1,0 +1,23 @@
+{
+  "extends": ["@tsconfig/strictest"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./js/component",
+    "rootDir": "./ts/component",
+    "module": "commonjs",
+    "target": "esnext",
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "inlineSourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmitOnError": true,
+    "types": [],
+    "lib": ["dom", "esnext"]
+  },
+  "include": ["ts/component/**/*.ts", "ts/component/**/*.tsx"],
+  "exclude": ["ts/**/*.test.*", "ts/**/*.spec.*"]
+}

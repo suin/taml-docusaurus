@@ -1,0 +1,15 @@
+{
+  "extends": ["@tsconfig/node22", "@tsconfig/strictest"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./js/plugin",
+    "rootDir": "./ts/plugin",
+    "inlineSourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmitOnError": true,
+    "types": ["node"]
+  },
+  "include": ["ts/plugin/**/*.ts"],
+  "exclude": ["ts/**/*.test.*", "ts/**/*.spec.*"]
+}
