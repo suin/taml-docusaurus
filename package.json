@@ -43,7 +43,7 @@
     "ts/**/*",
     "!ts/**/*.test.*",
     "!ts/**/*.spec.*",
-    "!ts/**/__tests__"
+    "!ts/**/__tests__/*"
   ],
   "scripts": {
     "build": "tsc -b",
@@ -63,8 +63,5 @@
     "mdast": "^3.0.0",
     "typescript": "latest",
     "unified": "^11.0.5"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
   }
 }
