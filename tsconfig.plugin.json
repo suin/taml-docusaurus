@@ -7,7 +7,6 @@
     "inlineSourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "noEmitOnError": true,
     "types": ["node"]
   },
   "include": ["ts/plugin/**/*.ts"],

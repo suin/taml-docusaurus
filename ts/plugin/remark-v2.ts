@@ -1,4 +1,5 @@
 import type { Code, Root } from "mdast";
+import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { Transformer } from "unified";
 import { map } from "unist-util-map";
 
@@ -14,8 +15,8 @@ export function tamlRemarkPlugin(): Transformer {
   };
 }
 
-function replaceWithJsxNode(code: Code): Code {
-  if (code.lang !== "html" || code.meta !== "taml") {
+function replaceWithJsxNode(code: Code): Code | MdxJsxFlowElement {
+  if (code.lang !== "taml") {
     return code;
   }
   const tamlCodeString = JSON.stringify(code.value);

@@ -107,7 +107,7 @@ Now you can use TAML in your markdown files:
 
 Here's a colorful terminal output:
 
-```html taml
+```taml
 <green>user@computer</green>:<blue>~/project</blue>$ npm test
 
 <bold><blue>Running tests...</blue></bold>
@@ -119,7 +119,7 @@ Here's a colorful terminal output:
 
 Log messages with different severity levels:
 
-```html taml
+```taml
 <dim>2024-12-07 10:30:15</dim> <blue>[INFO]</blue> Application started
 <dim>2024-12-07 10:30:16</dim> <green>[SUCCESS]</green> Database connected  
 <dim>2024-12-07 10:30:45</dim> <yellow>[WARN]</yellow> High memory usage
@@ -133,7 +133,7 @@ Log messages with different severity levels:
 - 📝 **Markdown Integration**: Seamlessly renders TAML in Docusaurus markdown files
 - ⚡ **Zero Configuration**: Works out of the box with Docusaurus classic preset
 - 🔧 **TypeScript Ready**: Full type safety and IntelliSense support
-- 🎯 **Automatic Processing**: Transforms ` ```html taml ` code blocks automatically
+- 🎯 **Automatic Processing**: Transforms ` ```taml ` code blocks automatically
 - 📦 **Lightweight**: Minimal bundle size impact
 
 ## Usage Examples
@@ -158,14 +158,14 @@ module.exports = config;
 
 ### Using TAML in Markdown
 
-In your markdown files, use code blocks with `html` language and `taml` meta:
+In your markdown files, use code blocks with `taml` language:
 
 ````markdown
 # Terminal Output Examples
 
 Here's a colorful terminal output:
 
-```html taml
+```taml
 <green>user@computer</green>:<blue>~/project</blue>$ npm test
 
 <bold><blue>Running tests...</blue></bold>
@@ -179,7 +179,7 @@ Here's a colorful terminal output:
 ### Terminal Commands
 
 ````markdown
-```html taml
+```taml
 <green>$</green> <bold>git status</bold>
 On branch main
 Your branch is up to date with 'origin/main'.
@@ -197,7 +197,7 @@ Your branch is up to date with 'origin/main'.
 ### Application Logs
 
 ````markdown
-```html taml
+```taml
 <bgGreen><black><bold> SUCCESS </bold></black></bgGreen> <green>Deployment completed</green>
 
 <bold>Deployment Summary:</bold>
@@ -215,7 +215,7 @@ Your branch is up to date with 'origin/main'.
 ### Error Messages
 
 ````markdown
-```html taml
+```taml
 <bgRed><white><bold> ERROR </bold></white></bgRed>
 
 <red><bold>Build failed with 3 errors:</bold></red>
@@ -238,7 +238,7 @@ Your branch is up to date with 'origin/main'.
 
 The preset works by:
 
-1. **Remark Plugin**: Transforms ` ```html taml ` code blocks into JSX components
+1. **Remark Plugin**: Transforms ` ```taml ` code blocks into JSX components
 2. **Component Injection**: Automatically imports the `<Taml>` component
 3. **React Rendering**: Uses `@taml/react` under the hood for consistent styling
 
@@ -250,7 +250,7 @@ Markdown → Remark Plugin → JSX Transformation → React Component → Styled
 
 **Before processing:**
 ````markdown
-```html taml
+```taml
 <red>Error message</red>
 ```
 ````
@@ -415,7 +415,7 @@ console.log("Red elements:", redElements.length);
 console.log("Bold elements:", boldElements.length);
 
 // 4. Use in Docusaurus documentation
-// ```html taml
+// ```taml
 // <red>ERROR:</red> <bold>Database connection failed</bold>
 // ```
 ```
@@ -456,8 +456,7 @@ The preset includes a remark plugin that processes TAML code blocks:
 
 ```typescript
 // Plugin processes code blocks with:
-// - language: "html"
-// - meta: "taml"
+// - language: "taml"
 ```
 
 ## Advanced Topics
@@ -513,14 +512,14 @@ docker build . | taml > docs/examples/docker-build.taml
 # Create interactive tutorials with preserved colors
 ## Step 1: Initialize Git Repository
 
-```html taml
+```taml
 <green>$</green> git init
 Initialized empty Git repository in /project/.git/
 ```
 
 ## Step 2: Add Files
 
-```html taml
+```taml
 <green>$</green> git add .
 <green>$</green> git commit -m "Initial commit"
 [main (root-commit) abc123] Initial commit
@@ -535,7 +534,7 @@ Initialized empty Git repository in /project/.git/
 
 When an API call fails, you'll receive an error response:
 
-```html taml
+```taml
 <red>HTTP/1.1 400 Bad Request</red>
 <dim>Content-Type: application/json</dim>
 
@@ -554,17 +553,17 @@ Make sure you're using the correct syntax:
 
 ````markdown
 <!-- ✅ Correct -->
-```html taml
-<red>Error message</red>
-```
-
-<!-- ❌ Incorrect - missing 'taml' meta -->
-```html
+```taml
 <red>Error message</red>
 ```
 
 <!-- ❌ Incorrect - wrong language -->
-```taml
+```html
+<red>Error message</red>
+```
+
+<!-- ❌ Incorrect - old syntax (no longer supported) -->
+```html taml
 <red>Error message</red>
 ```
 ````
@@ -582,7 +581,7 @@ npm install @taml/docusaurus --save-dev
 If TAML content appears unstyled, check that:
 
 1. The preset is correctly added to your `docusaurus.config.js`
-2. You're using the `html taml` code block syntax
+2. You're using the `taml` code block syntax
 3. The default CSS is loading (inspect element to verify classes)
 
 ### Build Errors

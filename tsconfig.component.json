@@ -4,7 +4,7 @@
     "composite": true,
     "outDir": "./js/component",
     "rootDir": "./ts/component",
-    "module": "commonjs",
+    "module": "nodenext",
     "target": "esnext",
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
@@ -14,7 +14,6 @@
     "inlineSourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "noEmitOnError": true,
     "types": [],
     "lib": ["dom", "esnext"]
   },
