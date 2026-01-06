@@ -44,6 +44,16 @@ graph TD
 - **[@taml/react](https://github.com/suin/taml-react)** - React component that renders TAML markup as styled JSX elements with full TypeScript support and performance optimization.
 - **[@taml/docusaurus](https://github.com/suin/taml-docusaurus)** - Docusaurus preset for rendering TAML (Terminal ANSI Markup Language) code blocks as styled components.
 
+## Demo
+
+- **Docusaurus v3**
+  - **Repository**: [suin/taml-docusaurus-example-v3](https://github.com/suin/taml-docusaurus-example-v3)
+  - **Demo site**: [taml-docusaurus-example-v3.vercel.app](https://taml-docusaurus-example-v3.vercel.app/)
+
+- **Docusaurus v2**
+  - **Repository**: [suin/taml-docusaurus-example-v2](https://github.com/suin/taml-docusaurus-example-v2)
+  - **Demo site**: [taml-docusaurus-example-v2.vercel.app](https://taml-docusaurus-example-v2.vercel.app/)
+
 ## Installation
 
 ### npm
@@ -70,21 +80,11 @@ pnpm add @taml/docusaurus
 bun add @taml/docusaurus
 ```
 
-### TypeScript Setup
+## Configuration
 
-This package includes TypeScript declarations out of the box. No additional setup is required for TypeScript projects.
+Add the preset to your `docusaurus.config.js`.
 
-```typescript
-// ESM
-import { preset } from "@taml/docusaurus";
-
-// CommonJS
-const { preset } = require("@taml/docusaurus");
-```
-
-## Quick Start
-
-Here's a 5-minute introduction to adding TAML support to your Docusaurus site:
+### Docusaurus v3 (Recommended)
 
 ```javascript
 // docusaurus.config.js
@@ -92,7 +92,7 @@ const config = {
   // ... other config
   presets: [
     ['classic', { /* classic preset options */ }],
-    ['@taml/docusaurus'], // Add this line
+    ['@taml/docusaurus', {}], // Add this line
   ],
   // ... rest of config
 };
@@ -100,47 +100,9 @@ const config = {
 module.exports = config;
 ```
 
-Now you can use TAML in your markdown files:
+### Docusaurus v2
 
-````markdown
-# Terminal Output Examples
-
-Here's a colorful terminal output:
-
-```taml
-<green>user@computer</green>:<blue>~/project</blue>$ npm test
-
-<bold><blue>Running tests...</blue></bold>
-
-<green>✓</green> All tests passed <dim>(15 tests, 2.3s)</dim>
-<yellow>⚠</yellow> 1 snapshot updated
-<red>✗</red> Coverage threshold not met
-```
-
-Log messages with different severity levels:
-
-```taml
-<dim>2024-12-07 10:30:15</dim> <blue>[INFO]</blue> Application started
-<dim>2024-12-07 10:30:16</dim> <green>[SUCCESS]</green> Database connected  
-<dim>2024-12-07 10:30:45</dim> <yellow>[WARN]</yellow> High memory usage
-<dim>2024-12-07 10:31:02</dim> <red>[ERROR]</red> Connection failed
-```
-````
-
-## Features
-
-- 🎨 **Rich Terminal Styling**: Supports all 37 TAML tags (colors, backgrounds, text styles)
-- 📝 **Markdown Integration**: Seamlessly renders TAML in Docusaurus markdown files
-- ⚡ **Zero Configuration**: Works out of the box with Docusaurus classic preset
-- 🔧 **TypeScript Ready**: Full type safety and IntelliSense support
-- 🎯 **Automatic Processing**: Transforms ` ```taml ` code blocks automatically
-- 📦 **Lightweight**: Minimal bundle size impact
-
-## Usage Examples
-
-### Basic Configuration
-
-Add the preset to your `docusaurus.config.js`:
+For Docusaurus v2, you need to specify the version option.
 
 ```javascript
 // docusaurus.config.js
@@ -148,17 +110,49 @@ const config = {
   // ... other config
   presets: [
     ['classic', { /* classic preset options */ }],
-    ['@taml/docusaurus'], // Add this line
+    ['@taml/docusaurus', { docusaurusVersion: "v2" }], // Add this line
   ],
   // ... rest of config
 };
-
-module.exports = config;
 ```
 
-### Using TAML in Markdown
+#### Webpack Workaround for v2
 
-In your markdown files, use code blocks with `taml` language:
+Docusaurus v2 uses React 17. In some build environments, Webpack can fail with "fully specified" ESM resolution for `react/jsx-runtime`. If you hit that, add this workaround plugin:
+
+```javascript
+// docusaurus.config.js
+const config = {
+  // ... presets config ...
+
+  // Workaround for Webpack "fully specified" ESM resolution failures on some build environments
+  // (e.g. when ESM dependencies import `react/jsx-runtime` without the `.js` extension).
+  plugins: [
+    function webpackResolveReactJsxRuntime() {
+      return {
+        name: 'webpack-resolve-react-jsx-runtime',
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                'react/jsx-runtime': require.resolve('react/jsx-runtime'),
+                'react/jsx-dev-runtime': require.resolve('react/jsx-dev-runtime'),
+              },
+            },
+          };
+        },
+      };
+    },
+  ],
+  // ... rest of config
+};
+```
+
+## Usage
+
+In your markdown files, use code blocks with `taml` language.
+
+### Basic Example
 
 ````markdown
 # Terminal Output Examples
@@ -176,7 +170,9 @@ Here's a colorful terminal output:
 ```
 ````
 
-### Terminal Commands
+### More Examples
+
+#### Terminal Commands
 
 ````markdown
 ```taml
@@ -194,7 +190,7 @@ Your branch is up to date with 'origin/main'.
 ```
 ````
 
-### Application Logs
+#### Application Logs
 
 ````markdown
 ```taml
@@ -212,7 +208,7 @@ Your branch is up to date with 'origin/main'.
 ```
 ````
 
-### Error Messages
+#### Error Messages
 
 ````markdown
 ```taml
@@ -233,6 +229,15 @@ Your branch is up to date with 'origin/main'.
    <red>Expected 200 but received 401</red>
 ```
 ````
+
+## Features
+
+- 🎨 **Rich Terminal Styling**: Supports all 37 TAML tags (colors, backgrounds, text styles)
+- 📝 **Markdown Integration**: Seamlessly renders TAML in Docusaurus markdown files
+- ⚡ **Zero Configuration**: Works out of the box with Docusaurus classic preset
+- 🔧 **TypeScript Ready**: Full type safety and IntelliSense support
+- 🎯 **Automatic Processing**: Transforms ` ```taml ` code blocks automatically
+- 📦 **Lightweight**: Minimal bundle size impact
 
 ## How It Works
 
@@ -275,41 +280,6 @@ import Taml from "@taml/docusaurus/component";
 ### Text Styles (5 total)
 - `<bold>`, `<dim>`, `<italic>`, `<underline>`, `<strikethrough>`
 
-## Advanced Configuration
-
-### Custom Setup
-
-If you need more control, you can configure the preset:
-
-```javascript
-// docusaurus.config.js
-const config = {
-  presets: [
-    ['classic', {
-      docs: {
-        // Classic preset docs config
-      },
-      blog: {
-        // Classic preset blog config  
-      },
-    }],
-    ['@taml/docusaurus'], // Automatically injects into docs, blog, and pages
-  ],
-};
-```
-
-### Manual Component Usage
-
-You can also use the `<Taml>` component directly in MDX files:
-
-```mdx
-import Taml from '@taml/docusaurus/component';
-
-# My Documentation
-
-<Taml>{"<bold><blue>This is manually rendered TAML</blue></bold>"}</Taml>
-```
-
 ## Styling
 
 The preset includes default CSS styles for all TAML tags. The styles are automatically injected and use semantic class names:
@@ -350,91 +320,33 @@ You can override the default styles in your Docusaurus CSS:
 }
 ```
 
-## Integration with TAML Ecosystem
+## Advanced Usage
 
-### With Parser and AST
+### Manual Component Usage
 
-```typescript
-import { parse } from "@taml/parser";
-import { visit, getAllText, getElementsWithTag } from "@taml/ast";
+You can also use the `<Taml>` component directly in MDX files:
 
-// Parse TAML markup into AST
-const ast = parse("<red>Hello <bold>World</bold>!</red>");
+```mdx
+import Taml from '@taml/docusaurus/component';
 
-// Process the AST
-const text = getAllText(ast);
-visit(ast, {
-  visitElement: (node) => console.log(`Element: ${node.tagName}`),
-});
+# My Documentation
+
+<Taml>{"<bold><blue>This is manually rendered TAML</blue></bold>"}</Taml>
 ```
 
-### With Encoder
+### Integration with TAML Ecosystem
 
-```typescript
-import { encode } from "@taml/encoder";
-
-// Convert ANSI to TAML for use in documentation
-const ansiText = "\x1b[31mError:\x1b[0m Operation failed";
-const tamlMarkup = encode(ansiText);
-// Use tamlMarkup in your Docusaurus markdown files
-```
-
-### With CLI Tools
+You can use other TAML packages to generate content for your documentation.
 
 ```bash
-# Generate TAML examples for documentation
+# Generate TAML examples for documentation using @taml/cli
 git status | taml > docs/examples/git-status.taml
 npm test | taml > docs/examples/test-output.taml
-docker build . | taml > docs/examples/docker-build.taml
 ```
 
-### Complete Processing Pipeline
-
-```typescript
-import { encode } from "@taml/encoder";
-import { parse } from "@taml/parser";
-import { visit, getAllText, getElementsWithTag } from "@taml/ast";
-
-// Complete ANSI → TAML → AST → Documentation pipeline
-const ansiOutput = "\x1b[31mERROR:\x1b[0m \x1b[1mDatabase connection failed\x1b[0m";
-
-// 1. Convert ANSI to TAML
-const tamlMarkup = encode(ansiOutput);
-console.log(tamlMarkup); // "<red>ERROR:</red> <bold>Database connection failed</bold>"
-
-// 2. Parse TAML to AST
-const ast = parse(tamlMarkup);
-
-// 3. Analyze AST
-const plainText = getAllText(ast);
-const redElements = getElementsWithTag(ast, "red");
-const boldElements = getElementsWithTag(ast, "bold");
-
-console.log("Plain text:", plainText);
-console.log("Red elements:", redElements.length);
-console.log("Bold elements:", boldElements.length);
-
-// 4. Use in Docusaurus documentation
-// ```taml
-// <red>ERROR:</red> <bold>Database connection failed</bold>
-// ```
-```
+For more complex pipelines (ANSI → TAML → AST), see the [TAML Ecosystem](#taml-ecosystem) packages.
 
 ## API Reference
-
-### Preset Configuration
-
-The preset can be used with default settings or customized:
-
-```javascript
-// Default usage
-['@taml/docusaurus']
-
-// With options (future extensibility)
-['@taml/docusaurus', {
-  // Future configuration options
-}]
-```
 
 ### Component Export
 
@@ -459,92 +371,6 @@ The preset includes a remark plugin that processes TAML code blocks:
 // - language: "taml"
 ```
 
-## Advanced Topics
-
-### Performance Considerations
-
-#### Efficient Processing
-
-The preset is optimized for documentation sites:
-
-- **Build-time Processing**: TAML is processed during build, not runtime
-- **Component Reuse**: Single `<Taml>` component handles all rendering
-- **CSS Optimization**: Minimal CSS footprint with semantic classes
-- **Bundle Size**: Lightweight preset with minimal dependencies
-
-#### Memory Usage
-
-- **Static Generation**: No runtime parsing overhead
-- **Shared Components**: Efficient component reuse across pages
-- **CSS Classes**: Semantic class names for optimal CSS compression
-
-### Error Handling Patterns
-
-#### Graceful Degradation
-
-```javascript
-// The preset handles invalid TAML gracefully
-// Invalid syntax falls back to plain text rendering
-```
-
-#### Development Warnings
-
-```javascript
-// During development, invalid TAML syntax will show warnings
-// in the console to help with debugging
-```
-
-### Integration Patterns
-
-#### Documentation Generation
-
-```bash
-# Generate documentation examples
-mkdir docs/examples
-git log --oneline --color=always | head -10 | taml > docs/examples/git-log.taml
-npm test | taml > docs/examples/test-output.taml
-docker build . | taml > docs/examples/docker-build.taml
-```
-
-#### Tutorial Creation
-
-```markdown
-# Create interactive tutorials with preserved colors
-## Step 1: Initialize Git Repository
-
-```taml
-<green>$</green> git init
-Initialized empty Git repository in /project/.git/
-```
-
-## Step 2: Add Files
-
-```taml
-<green>$</green> git add .
-<green>$</green> git commit -m "Initial commit"
-[main (root-commit) abc123] Initial commit
- 3 files changed, 42 insertions(+)
-```
-```
-
-#### API Documentation
-
-```markdown
-# Error Responses
-
-When an API call fails, you'll receive an error response:
-
-```taml
-<red>HTTP/1.1 400 Bad Request</red>
-<dim>Content-Type: application/json</dim>
-
-{
-  <red>"error"</red>: <yellow>"Invalid request"</yellow>,
-  <red>"code"</red>: <yellow>"INVALID_INPUT"</yellow>
-}
-```
-```
-
 ## Troubleshooting
 
 ### Code Blocks Not Transforming
@@ -561,36 +387,15 @@ Make sure you're using the correct syntax:
 ```html
 <red>Error message</red>
 ```
-
-<!-- ❌ Incorrect - old syntax (no longer supported) -->
-```html taml
-<red>Error message</red>
-```
 ````
-
-### TypeScript Errors
-
-If you see TypeScript errors, ensure the preset is properly installed and the types are available:
-
-```bash
-npm install @taml/docusaurus --save-dev
-```
-
-### Styling Issues
-
-If TAML content appears unstyled, check that:
-
-1. The preset is correctly added to your `docusaurus.config.js`
-2. You're using the `taml` code block syntax
-3. The default CSS is loading (inspect element to verify classes)
 
 ### Build Errors
 
 If you encounter build errors:
 
-1. Ensure you're using a compatible Docusaurus version (3.0+)
-2. Check that the preset is properly configured
-3. Verify that your TAML syntax is valid
+1. Ensure you're using a compatible Docusaurus version (v2 or v3).
+2. For Docusaurus v2, ensure `docusaurusVersion: "v2"` is set in config.
+3. If using v2 and encountering Webpack errors, apply the [Webpack Workaround](#webpack-workaround-for-v2).
 
 ## Contributing
 
@@ -599,50 +404,11 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ### Development Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/suin/taml-docusaurus.git
 cd taml-docusaurus
-
-# Install dependencies
 bun install
-
-# Run tests
-bun test
-
-# Build the project
 bun run build
-
-# Lint and format
-bun run lint
-bun run format
-```
-
-### Testing
-
-The project uses Bun for testing with comprehensive test coverage:
-
-```bash
-# Run all tests
 bun test
-
-# Run tests in watch mode
-bun test --watch
-
-# Run specific test file
-bun test plugin.test.ts
-```
-
-### Code Quality
-
-```bash
-# Lint code
-bun run lint
-
-# Format code
-bun run format
-
-# Type checking
-bun run build
 ```
 
 ## License
