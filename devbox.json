@@ -14,7 +14,7 @@
       "publish": [
         "bun install --frozen-lockfile",
         "bun run build",
-        "npm publish --provenance --access public"
+        "npm publish --access public"
       ]
     }
   }
