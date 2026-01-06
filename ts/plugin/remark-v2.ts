@@ -5,13 +5,15 @@ import { map } from "unist-util-map";
 
 export function tamlRemarkPlugin(): Transformer {
   return function modifyTreeForTaml(root) {
-    return map(root as Root, (node) =>
-      node.type === "code"
-        ? replaceWithJsxNode(node)
-        : node.type === "root"
-          ? prependImportNode(node)
-          : node,
-    );
+    return map(root as Root, (node) => {
+      if (node.type === "code") {
+        return replaceWithJsxNode(node);
+      }
+      if (node.type === "root") {
+        return prependImportNode(node);
+      }
+      return node;
+    });
   };
 }
 

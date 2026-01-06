@@ -13,7 +13,7 @@ export interface DocusaurusTamlPresetOptions {
 
 export default function docusaurusTamlPreset(
   context: DocusaurusContext,
-  options: DocusaurusTamlPresetOptions = {},
+  options: DocusaurusTamlPresetOptions = {}
 ): Preset {
   const docusaurusVersion = options.docusaurusVersion ?? "v3";
   injectRemarkPlugin(context.siteConfig.presets, docusaurusVersion);
@@ -22,7 +22,7 @@ export default function docusaurusTamlPreset(
 
 function injectRemarkPlugin(
   presets: Array<PresetConfig>,
-  docusaurusVersion: "v2" | "v3",
+  docusaurusVersion: "v2" | "v3"
 ): void {
   for (const preset of presets) {
     // preset can be a string, a false, a null, or an array
