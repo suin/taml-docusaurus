@@ -15,8 +15,4 @@ jobs:
       - uses: jetify-com/devbox-install-action@a0d2d53632934ae004f878c840055956d9f741b0 # v0.14.0
         with:
           enable-cache: "true"
-      # The registry-url must be set for authentication to work on the npm publish step
-      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
-        with:
-          node-version: "24"
       - run: devbox run publish

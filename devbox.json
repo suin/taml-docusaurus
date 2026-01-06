@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.2/.schema/devbox.schema.json",
-  "packages": ["bun@latest", "biome@latest", "nodejs@22"],
+  "packages": ["bun@latest", "biome@latest", "nodejs@24"],
   "shell": {
     "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
     "scripts": {
@@ -14,6 +14,7 @@
       "publish": [
         "bun install --frozen-lockfile",
         "bun run build",
+        "npm --version",
         "npm publish --access public"
       ]
     }
