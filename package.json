@@ -48,7 +48,7 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf js *.tsbuildinfo",
-    "test": "bun test"
+    "test": "bun test --pass-with-no-tests"
   },
   "dependencies": {
     "@taml/react": "^1.0.0",
